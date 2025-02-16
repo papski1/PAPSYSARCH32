@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%; /* Makes the logo round */
+            object-fit: cover;
+            display: block;
+            margin: 0 auto 20px; /* Centers the logo and adds spacing */
+        }
+        .register-button {
+            display: inline-block;
+            text-decoration: none; /* Removes underline */
+            background: #0080ff; /* Match Login button color */
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .register-button:hover {
+            background-color: #044e97;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 121, 107, 0.3);
+        }
+
+    </style>
+</head>
+<body>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="form-container">
+            <img class="logo" src="{{ url_for('static', filename='image/images.png') }}" alt="Logo">
+            <h2 style="color: #333">SIT-IN SYSTEM MONITORING</h2>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="error">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            <br>
+            <form method="POST" action="{{ url_for('login') }}">
+                <div class="form-group">
+                    <label for="user_input">Username or ID Number:</label>
+                    <input type="text" id="user_input" name="user_input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit">Log In</button>
+                </div>
+            </form>
+            <a href="{{ url_for('register') }}" class="register-button">Register</a>           
+        </div>
+    </div>
+</body>
+</html>

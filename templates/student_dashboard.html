@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header>
+        <h1>Student Dashboard</h1>
+    </header>
+    <div class="content">
+        {% include 'sections/' ~ section ~ '.html' %}
+    </div>
+</div>
+{% endblock %}

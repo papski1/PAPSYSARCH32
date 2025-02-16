@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let currentUrl = window.location.href.replace(/\/$/, "");  // Trim trailing slash
+            document.querySelectorAll('.sidebar ul li a').forEach(link => {
+                if (link.href.replace(/\/$/, "") === currentUrl) {
+                    link.classList.add("active");
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        {% if not hide_sidebar %}
+        <div class="sidebar">
+            <img class="round-logo" src="{{ url_for('static', filename='image/images.png') }}" alt="Logo">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="{{ url_for('student_dashboard', section='dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('student_dashboard', section='info') }}">Info</a></li>
+                <li><a href="{{ url_for('student_dashboard', section='announcement') }}">Announcement</a></li>
+                <li><a href="{{ url_for('student_dashboard', section='remaining_session') }}">Remaining Session</a></li>
+                <li><a href="{{ url_for('student_dashboard', section='sit_in_rules') }}">Sit-in Rules</a></li>
+                <li><a href="{{ url_for('student_dashboard', section='lab_rules') }}">Lab Rules</a></li>
+                <li><a href="{{ url_for('student_dashboard', section='sit_in_history') }}">Sit-in History</a></li>
+                <li><a href="{{ url_for('student_dashboard', section='reservation') }}">Reservation</a></li>
+                <li><a href="{{ url_for('logout') }}" class="logout-link">Logout</a></li>
+            </ul>
+        </div>
+        {% endif %}
+        
+        <div class="main-content">
+            <div class="content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

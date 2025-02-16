@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<style>    
+    .login-button {
+            display: inline-block;
+            text-decoration: none; /* Removes underline */
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-weight: bold;
+            background: #0080ff;
+        }
+
+        .login-button:hover {
+            background-color: #044e97;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 121, 107, 0.3);
+        }
+</style>
+<body>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="form-container">
+            <h2 style="color: #333">Create New Account</h2>
+            
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="error">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            
+            <form method="POST" action="{{ url_for('register') }}">
+                <div class="form-group">
+                    <label for="idno">ID Number:</label>
+                    <input type="text" id="idno" name="idno" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastname">Last Name:</label>
+                    <input type="text" id="lastname" name="lastname" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="firstname">First Name:</label>
+                    <input type="text" id="firstname" name="firstname" required>
+                </div>
+            
+                <div class="form-group">
+                    <label for="midname">Middle Name:</label>
+                    <input type="text" id="midname" name="midname">
+                </div>
+                
+                <div class="form-group">
+                    <label for="course">Course:</label>
+                    <select id="course" name="course" required>
+                        <option value="">Select Course</option>
+                        <option value="BSIT">BS Information Technology</option>
+                        <option value="BSCS">BS Computer Science</option>
+                        <option value="BSCE">BS Computer Engineering</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="year_level">Year Level:</label>
+                    <select id="year_level" name="year_level" required>
+                        <option value="">Select Year Level</option>
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                <button type="submit">Register</button>
+                </div>
+            </form>
+                <a href="{{ url_for('login') }}" class="login-button">Already have an account? Login here</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Info{% endblock %}
+
+{% block content %}
+<style>
+    .card {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        text-align: center;
+    }
+    .info-section p {
+        font-size: 16px;
+        margin: 10px 0;
+        padding: 10px;
+        background: #f2f2f2;
+        border-radius: 5px;
+        color: #333;
+        font-weight: 500;
+        text-align: left;
+    }
+    .button-section {
+        margin-top: 20px;
+    }
+    .edit-button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+    .edit-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="card">
+    <h3 style="color: #333; font-weight: 600;">User Information</h3>
+    <div class="info-section">
+        <p><strong>Username:</strong> {{ session.get('username', 'Not specified') }}</p>
+        <p><strong>Full Name:</strong> {{ session.get('full_name', 'Not specified') }}</p>
+        <p><strong>Email:</strong> {{ session.get('email', 'Not specified') }}</p>
+        <p><strong>Year Level:</strong> {{ session.get('year_level', 'Not specified') }}</p>
+        <p><strong>Course:</strong> {{ session.get('course', 'Not specified') }}</p>
+        <p><strong>Student ID:</strong> {{ session.get('student_id', 'Not specified') }}</p>
+    </div>
+    <div class="button-section">
+        {% if session.get('user_id') %}
+            <a href="{{ url_for('edit_user', user_id=session.get('user_id')) }}" class="edit-button">Edit</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

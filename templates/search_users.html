@@ -1,0 +1,36 @@
+{% extends "staff.html" %}
+
+{% block content %}
+<h2>Search Users</h2>
+<form action="{{ url_for('search_users') }}" method="POST">
+    <input type="text" name="query" placeholder="Enter username..." required>
+    <button type="submit">Search</button>
+</form>
+
+{% if users %}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user[0] }}</td>
+            <td>{{ user[1] }}</td>
+            <td>
+                <form action="{{ url_for('delete_user', user_id=user[0]) }}" method="POST">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No users found.</p>
+{% endif %}
+{% endblock %}

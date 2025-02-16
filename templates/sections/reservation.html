@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Reservation{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h3>Reservation</h3>
+    <form method="POST" action="{{ url_for('reservation') }}">
+        <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" id="date" name="date" required>
+        </div>
+        <div class="form-group">
+            <label for="time">Time</label>
+            <input type="time" id="time" name="time" required>
+        </div>
+        <button type="submit">Reserve a session</button>
+    </form>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+</div>
+
+<div class="card">
+    <h3>Your Reservations</h3>
+    {% if reservations %}
+        <ul>
+            {% for reservation in reservations %}
+                <li>{{ reservation[0] }} at {{ reservation[1] }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have no reservations.</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+CREATE TABLE IF NOT EXISTS reservations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL,
+    date TEXT NOT NULL,
+    time TEXT NOT NULL
+);

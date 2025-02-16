@@ -1,0 +1,42 @@
+{% extends "staff.html" %}
+
+{% block content %}
+<h2>Generate Reports</h2>
+
+<h3>Reports by Purpose</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Purpose</th>
+            <th>Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in purpose_report %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Reports by Year Level</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Year Level</th>
+            <th>Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in level_report %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
