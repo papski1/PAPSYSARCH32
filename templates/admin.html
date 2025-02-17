@@ -15,18 +15,17 @@
         <h2>Admin</h2>
         <ul>
             <li><a href="{{ url_for('admin') }}">Dashboard</a></li>
-            <li><a href="{{ url_for('manage_users') }}">Manage Users</a></li>
+            <li><a href="{{ url_for('view_users') }}">Overview</a></li>
             <li><a href="{{ url_for('logout') }}" class="logout-link">Logout</a></li>
         </ul>
     </div>
     <div class="main-content">
         <div class="header">
-            <h2>Welcome, Admin</h2>
-            <p class="welcome-message">Manage your users and systems efficiently.</p>
+            <h2 style="color: #232334">Welcome, Admin</h2>
         </div>
         <div class="card">
             <h3>System Overview</h3>
-            <p>Monitor lab systems and manage user access.</p>
+            <p>Monitor lab systems and view user access.</p>
         </div>
     </div>
     <footer>

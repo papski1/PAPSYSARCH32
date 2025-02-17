@@ -66,7 +66,7 @@ def init_db():
     # Ensure an admin user exists
     c.execute("SELECT * FROM users WHERE username = 'admin'")
     if not c.fetchone():
-        hashed_password = generate_password_hash('admin_password')
+        hashed_password = generate_password_hash('users')
         c.execute("INSERT INTO users (username, password, is_admin, is_staff) VALUES (?, ?, ?, ?)",
                   ('admin', hashed_password, 1, 0))
 
@@ -111,9 +111,9 @@ def admin():
 
     return render_template('admin.html', username=session['username'])
 
-@app.route('/manage_users')
-def manage_users():
-    """Manage Users Page (Admin Only) - Excludes logged-in admin."""
+@app.route('/view_users')
+def view_users():
+    """View Users Page (Admin Only) - Excludes logged-in admin."""
     if 'username' not in session or not session.get('is_admin'):
         flash('Access denied.')
         return redirect(url_for('home'))
@@ -126,8 +126,9 @@ def manage_users():
     users = c.fetchall()
     
     conn.close()
-    
-    return render_template('manage_users.html', users=users)
+
+    # Ensure the route returns a valid response
+    return render_template('view_users.html', users=users)
 
 @app.route('/info')
 def info():
@@ -150,7 +151,7 @@ def info():
         flash("User not found.")
         return redirect(url_for('student_dashboard'))  # Redirect if user is missing
 
-    return render_template("info.html", user=user)
+    return render_template("sections/info.html", user=user)
 
 @app.route('/announcement')
 def announcement():
@@ -181,13 +182,6 @@ def lab_rules():
         return redirect(url_for('login'))
     return render_template('sections/lab_rules.html', username=session['username'])
 
-@app.route('/sit_in_history')
-def sit_in_history():
-    """User's sit-in history page."""
-    if 'username' not in session:
-        return redirect(url_for('login'))
-    return render_template('sections/sit_in_history.html', username=session['username'])
-
 @app.route('/reservation', methods=['GET', 'POST'])
 def reservation():
     """Reservation system for users."""
@@ -199,6 +193,8 @@ def reservation():
     if request.method == 'POST':
         date = request.form['date']
         time = request.form['time']
+
+        print(f"Inserting reservation: username={username}, date={date}, time={time}")
 
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
@@ -342,16 +338,36 @@ def login():
 def register():
     """User registration."""
     if request.method == 'POST':
+        # Get form fields
         username = request.form['username']
-        password = generate_password_hash(request.form['password'])
+        password = request.form['password']
+        confirm_password = request.form['confirm_password']
+        full_name = f"{request.form['firstname']} {request.form['lastname']} {request.form['midname']}"
+        email = request.form['email']
+        course = request.form['course']
+        year_level = request.form['year_level']
+        student_id = request.form['idno']
+
+        # Check if passwords match
+        if password != confirm_password:
+            flash('Passwords do not match.')
+            return redirect(url_for('register'))
+
+        # Hash the password
+        hashed_password = generate_password_hash(password)
 
         try:
             conn = sqlite3.connect('database.db')
             c = conn.cursor()
-            c.execute('INSERT INTO users (username, id_user,  password, is_admin) VALUES (?, ?, ?)', 
-                     (username, password, 0))  # Set is_admin to 0 for regular users
+
+            # Insert new user into the users table
+            c.execute('''INSERT INTO users 
+                         (username, password, full_name, email, course, year_level, student_id, is_admin) 
+                         VALUES (?, ?, ?, ?, ?, ?, ?, ?)''',
+                      (username, hashed_password, full_name, email, course, year_level, student_id, 0))  # Set is_admin to 0 for regular users
             conn.commit()
             conn.close()
+
             flash('Registration successful! Please login.')
             return redirect(url_for('login'))
         except sqlite3.IntegrityError:
@@ -384,7 +400,7 @@ def edit_user(user_id):
     if not user:
         flash('User not found.')
         conn.close()
-        return redirect(url_for('manage_users' if is_admin else 'info'))
+        return redirect(url_for('info'))
 
     if request.method == 'POST':
         new_username = request.form['username']

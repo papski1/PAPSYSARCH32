@@ -46,25 +46,30 @@
             
             <form method="POST" action="{{ url_for('register') }}">
                 <div class="form-group">
-                    <label for="idno">ID Number:</label>
-                    <input type="text" id="idno" name="idno" required>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your Username" required autocomplete="off">
                 </div>
-                
+            
+                <div class="form-group">
+                    <label for="idno">ID Number:</label>
+                    <input type="text" id="idno" name="idno" placeholder="Enter your ID Number" required autocomplete="off">
+                </div>
+            
                 <div class="form-group">
                     <label for="lastname">Last Name:</label>
-                    <input type="text" id="lastname" name="lastname" required>
+                    <input type="text" id="lastname" name="lastname" placeholder="Enter your Last Name" required autocomplete="family-name">
                 </div>
-                
+            
                 <div class="form-group">
                     <label for="firstname">First Name:</label>
-                    <input type="text" id="firstname" name="firstname" required>
+                    <input type="text" id="firstname" name="firstname" placeholder="Enter your First Name" required autocomplete="given-name">
                 </div>
             
                 <div class="form-group">
                     <label for="midname">Middle Name:</label>
-                    <input type="text" id="midname" name="midname">
+                    <input type="text" id="midname" name="midname" placeholder="Enter your Middle Name (optional)" autocomplete="additional-name">
                 </div>
-                
+            
                 <div class="form-group">
                     <label for="course">Course:</label>
                     <select id="course" name="course" required>
@@ -74,7 +79,7 @@
                         <option value="BSCE">BS Computer Engineering</option>
                     </select>
                 </div>
-                
+            
                 <div class="form-group">
                     <label for="year_level">Year Level:</label>
                     <select id="year_level" name="year_level" required>
@@ -85,20 +90,26 @@
                         <option value="4">4th Year</option>
                     </select>
                 </div>
-                
+            
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="email" placeholder="Enter your Email" required autocomplete="email">
                 </div>
-                
+            
                 <div class="form-group">
                     <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
+                    <input type="password" id="password" name="password" placeholder="Enter your Password" required autocomplete="new-password">
                 </div>
+            
                 <div class="form-group">
-                <button type="submit">Register</button>
+                    <label for="confirm_password">Confirm Password:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Re-enter your Password" required autocomplete="new-password">
                 </div>
-            </form>
+            
+                <div class="form-group">
+                    <button type="submit">Register</button>
+                </div>
+            </form>            
                 <a href="{{ url_for('login') }}" class="login-button">Already have an account? Login here</a>
         </div>
     </div>

@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="card">
-    <h3>Reservation</h3>
+    <h3>Reserve Sit-in</h3>
     <form method="POST" action="{{ url_for('reservation') }}">
         <div class="form-group">
             <label for="date">Date</label>
@@ -28,7 +28,7 @@
 </div>
 
 <div class="card">
-    <h3>Your Reservations</h3>
+    <h3>Your History</h3>
     {% if reservations %}
         <ul>
             {% for reservation in reservations %}
@@ -36,7 +36,7 @@
             {% endfor %}
         </ul>
     {% else %}
-        <p>You have no reservations.</p>
+        <p>You have no history.</p>
     {% endif %}
 </div>
 {% endblock %}
